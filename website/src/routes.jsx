@@ -1,21 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import MyTodos from "./pages/my-todos";
-import Todos from "./pages/todos";
-import TodoForm from "./pages/todo-form";
+import Layout from "./components/Layout";
+
+import Todos from "./pages/Todos";
+import { Register } from "./pages/Register";
+import { Login } from "./pages/Login";
 
 const router = createBrowserRouter([
     {
-        path: "/",
-        element: <MyTodos />,
-    },
-    {
-        path: "/todos",
-        element: <Todos />,
-    },
-    {
-        path: "/todos/:id",
-        element: <TodoForm />,
+        element: <Layout />,
+        children: [
+            {
+                path: "/",
+                element: <Todos />,
+            },
+            {
+                path: "/register",
+                element: <Register />,
+            },
+            {
+                path: "/login",
+                element: <Login />,
+            },
+        ],
     },
 ]);
 
