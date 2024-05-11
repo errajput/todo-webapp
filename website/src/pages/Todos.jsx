@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { API_URL, getData, saveData } from "../services/http.service";
 
 function MyTodos() {
     const [myTodos, setMyTodos] = useState([]);
@@ -9,7 +10,8 @@ function MyTodos() {
         if (!myCurrentTodo) return;
         console.log({ myCurrentTodo });
 
-        setMyTodos([...myTodos, myCurrentTodo]);
+        // setMyTodos([...myTodos, myCurrentTodo]);
+        saveTodo(myCurrentTodo);
         setCurrentTodo("");
     };
 
@@ -17,6 +19,25 @@ function MyTodos() {
         console.log(e.target.value);
         setCurrentTodo(e.target.value);
     };
+
+    const getTodos = async () => {
+        const response = await getData(API_URL + "todos");
+        const todos = response?.data;
+        console.log("todos ", todos);
+
+        if (todos instanceof Array) {
+            setMyTodos(todos.map((v) => v?.title));
+        }
+    };
+
+    const saveTodo = async (todo) => {
+        await saveData(API_URL + "todos", { title: todo });
+        await getTodos();
+    };
+
+    useEffect(() => {
+        getTodos();
+    }, []);
 
     return (
         <>
