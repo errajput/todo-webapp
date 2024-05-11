@@ -1,38 +1,47 @@
 import { useEffect, useState } from "react";
-import { API_URL, getData, saveData } from "../services/http.service";
+import {
+    deleteData,
+    getData,
+    saveData,
+    updateData,
+} from "../services/http.service";
 
-function MyTodos() {
-    const [myTodos, setMyTodos] = useState([]);
-    const [myCurrentTodo, setCurrentTodo] = useState("");
-
-    const addTodo = (e) => {
-        e.preventDefault();
-        if (!myCurrentTodo) return;
-        console.log({ myCurrentTodo });
-
-        // setMyTodos([...myTodos, myCurrentTodo]);
-        saveTodo(myCurrentTodo);
-        setCurrentTodo("");
-    };
+export const Todos = () => {
+    const [todos, setTodos] = useState([]);
+    const [currentTodo, setCurrentTodo] = useState({
+        title: "",
+        isDone: false,
+    });
 
     const handleInputChange = (e) => {
-        console.log(e.target.value);
-        setCurrentTodo(e.target.value);
+        setCurrentTodo({ title: e.target.value, isDone: false });
+    };
+
+    const addTodo = async (e) => {
+        e.preventDefault();
+        if (!currentTodo) return;
+        await saveData("todos", { title: currentTodo.title });
+        await getTodos();
+        setCurrentTodo({ title: "", isDone: false });
+    };
+
+    const handleUpdate = async (e, id) => {
+        await updateData(`todos/${id}`, { isDone: e.target.checked });
+        await getTodos();
+    };
+
+    const handleDelete = async (id) => {
+        await deleteData(`todos/${id}`);
+        await getTodos();
     };
 
     const getTodos = async () => {
-        const response = await getData(API_URL + "todos");
+        const response = await getData("todos");
         const todos = response?.data;
-        console.log("todos ", todos);
 
         if (todos instanceof Array) {
-            setMyTodos(todos.map((v) => v?.title));
+            setTodos(todos);
         }
-    };
-
-    const saveTodo = async (todo) => {
-        await saveData(API_URL + "todos", { title: todo });
-        await getTodos();
     };
 
     useEffect(() => {
@@ -41,23 +50,29 @@ function MyTodos() {
 
     return (
         <>
-            <div>
+            <div className="add-todo-container">
                 <input
                     type="text"
-                    value={myCurrentTodo}
+                    value={currentTodo?.title}
                     onChange={handleInputChange}
                 />
                 <button onClick={addTodo}>Add</button>
             </div>
-            <div>
-                <ul>
-                    {myTodos.map((todo, i) => (
-                        <li key={i}>{todo}</li>
-                    ))}
-                </ul>
-            </div>
+            <ul className="todos-container">
+                {todos.map((todo, i) => (
+                    <li key={i}>
+                        <input
+                            type="checkbox"
+                            checked={todo.isDone}
+                            onChange={(e) => handleUpdate(e, todo._id)}
+                        />
+                        <span>{todo.title}</span>
+                        <button onClick={() => handleDelete(todo._id)}>
+                            Delete
+                        </button>
+                    </li>
+                ))}
+            </ul>
         </>
     );
-}
-
-export default MyTodos;
+};

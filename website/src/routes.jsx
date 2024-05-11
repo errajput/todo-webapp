@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Layout from "./components/Layout";
 
-import Todos from "./pages/Todos";
+import { Todos } from "./pages/Todos";
 import { Register } from "./pages/Register";
 import { Login } from "./pages/Login";
 
