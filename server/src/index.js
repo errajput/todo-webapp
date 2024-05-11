@@ -3,6 +3,7 @@ config({ path: "development.env" });
 
 import express from "express";
 import { connect } from "mongoose";
+import cors from "cors";
 
 import TodoRouter from "./routes/todo.routes.js";
 
@@ -13,6 +14,7 @@ import TodoRouter from "./routes/todo.routes.js";
     const app = express();
     const port = 8000;
 
+    app.use(cors());
     app.use(express.json());
     app.get("/", (req, res) => res.send({ message: "Ok" }));
     app.use("/todos", TodoRouter);
