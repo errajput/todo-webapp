@@ -57,7 +57,12 @@ nav ul li::before {
     margin-left: 1rem;
 }
 
-.form {
-    text-align: center;
-    padding: 2rem;
+.form-container {
+    /* text-align: center; */
+    width: 20rem;
+    margin: auto;
+}
+
+.form-container input {
+    margin-top: 1rem;
 }

@@ -60,3 +60,11 @@ export const deleteData = async (path) => {
     const response = await fetch(`${API_URL}${path}`, options);
     return await response.json();
 };
+
+export const isLogin = () => {
+    return !!localStorage.getItem("userToken");
+};
+
+export const logoutUser = () => {
+    localStorage.clear();
+};

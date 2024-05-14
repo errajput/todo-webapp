@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import { postData } from "../services/http.service";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { isLogin, postData } from "../services/http.service";
 
 export const Login = () => {
+    const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
 
@@ -14,48 +17,51 @@ export const Login = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const data = {
-            email,
-            password,
-        };
+        const data = { email, password };
         console.log("Data", data);
 
         const response = await postData("auth/login", data);
         console.log("Response ", response);
-        if (response.token) {
+        if (!response.error && response.token) {
             localStorage.setItem("userToken", response.token);
+            return navigate("/");
         }
     };
 
+    useEffect(() => {
+        if (isLogin()) {
+            return navigate("/");
+        }
+    }, []);
+
     return (
-        <>
-            <div className="form">
-                <form onSubmit={handleSubmit}>
-                    <label>
-                        Email:
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={email}
-                            onChange={handleEmailChange}
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        Password:
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={password}
-                            onChange={handlePasswordChange}
-                        />
-                    </label>
-                    <br />
-                    <input type="submit" value="Login" />
-                </form>
-            </div>
-        </>
+        <div>
+            <h1>Login</h1>
+            <form className="form-container" onSubmit={handleSubmit}>
+                <label>
+                    Email:
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={email}
+                        onChange={handleEmailChange}
+                    />
+                </label>
+                <br />
+                <label>
+                    Password:
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                    />
+                </label>
+                <br />
+                <input type="submit" value="Login" />
+            </form>
+        </div>
     );
 };

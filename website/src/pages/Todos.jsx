@@ -41,6 +41,7 @@ export const Todos = () => {
     };
 
     useEffect(() => {
+        // TODO: Add Navigate to Login if not login
         getTodos();
     }, []);
 
@@ -68,6 +69,7 @@ export const Todos = () => {
                         </button>
                     </li>
                 ))}
+                {todos.length === 0 && <h2>No Todo Found, Please Add.</h2>}
             </ul>
         </>
     );
