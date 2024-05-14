@@ -8,21 +8,17 @@ import {
 
 export const Todos = () => {
     const [todos, setTodos] = useState([]);
-    const [currentTodo, setCurrentTodo] = useState({
-        title: "",
-        isDone: false,
-    });
+    const [currentTodo, setCurrentTodo] = useState("");
 
     const handleInputChange = (e) => {
-        setCurrentTodo({ title: e.target.value, isDone: false });
+        setCurrentTodo(e.target.value);
     };
 
     const addTodo = async (e) => {
-        e.preventDefault();
         if (!currentTodo) return;
-        await saveData("todos", { title: currentTodo.title });
+        await saveData("todos", { title: currentTodo });
         await getTodos();
-        setCurrentTodo({ title: "", isDone: false });
+        setCurrentTodo("");
     };
 
     const handleUpdate = async (e, id) => {
@@ -53,7 +49,7 @@ export const Todos = () => {
             <div className="add-todo-container">
                 <input
                     type="text"
-                    value={currentTodo?.title}
+                    value={currentTodo}
                     onChange={handleInputChange}
                 />
                 <button onClick={addTodo}>Add</button>
