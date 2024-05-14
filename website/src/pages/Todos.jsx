@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
     deleteData,
     getData,
-    saveData,
+    postData,
     updateData,
 } from "../services/http.service";
 
@@ -16,7 +16,7 @@ export const Todos = () => {
 
     const addTodo = async (e) => {
         if (!currentTodo) return;
-        await saveData("todos", { title: currentTodo });
+        await postData("todos", { title: currentTodo });
         await getTodos();
         setCurrentTodo("");
     };

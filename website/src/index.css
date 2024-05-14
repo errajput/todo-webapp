@@ -56,3 +56,8 @@ nav ul li::before {
 .todos-container button {
     margin-left: 1rem;
 }
+
+.form {
+    text-align: center;
+    padding: 2rem;
+}
