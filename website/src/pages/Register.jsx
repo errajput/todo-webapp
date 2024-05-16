@@ -52,27 +52,29 @@ export const Register = () => {
                         />
                     </label>
                 </p>
+                <p>
+                    <label htmlFor="email">
+                        Email:
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            onChange={(e) => handleInputChange(e, "email")}
+                        />
+                    </label>
+                </p>
+                <p>
+                    <label>
+                        Password:
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            onChange={(e) => handleInputChange(e, "password")}
+                        />
+                    </label>
+                </p>
 
-                <label htmlFor="email">
-                    Email:
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        onChange={(e) => handleInputChange(e, "email")}
-                    />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        onChange={(e) => handleInputChange(e, "password")}
-                    />
-                </label>
-                <br />
                 <input type="submit" value="Register" />
             </form>
         </div>
