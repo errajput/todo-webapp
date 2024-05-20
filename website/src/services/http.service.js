@@ -12,21 +12,25 @@ export const getData = async (path) => {
 };
 
 export const postData = async (path, data) => {
-    const userToken = localStorage.getItem("userToken");
-    const options = {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: new Headers({ "content-type": "application/json" }),
-    };
-    if (userToken) {
-        options.headers = new Headers({
-            "content-type": "application/json",
-            Authorization: `Bearer ${userToken}`,
-        });
-    }
+    try {
+        const userToken = localStorage.getItem("userToken");
+        const options = {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: new Headers({ "content-type": "application/json" }),
+        };
+        if (userToken) {
+            options.headers = new Headers({
+                "content-type": "application/json",
+                Authorization: `Bearer ${userToken}`,
+            });
+        }
 
-    const response = await fetch(`${API_URL}${path}`, options);
-    return await response.json();
+        const response = await fetch(`${API_URL}${path}`, options);
+        return await response.json();
+    } catch (error) {
+        return { error: "Server down, try after some time." };
+    }
 };
 
 export const updateData = async (path, data) => {

@@ -7,6 +7,8 @@ export const Login = () => {
     const navigate = useNavigate();
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
+    // {type: error | info, detail: string}
+    const [message, setMessage] = useState(null);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -17,14 +19,20 @@ export const Login = () => {
     };
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        setMessage(null);
         const data = { email, password };
         console.log("Data", data);
 
         const response = await postData("auth/login", data);
         console.log("Response ", response);
-        if (!response.error && response.token) {
+        if (!response?.error && response?.token) {
             localStorage.setItem("userToken", response.token);
             return navigate("/");
+        }
+        if (response?.error) {
+            setPassword("");
+            setMessage({ detail: response.error, type: "error" });
         }
     };
 
@@ -38,6 +46,15 @@ export const Login = () => {
         <div>
             <h1>Login</h1>
             <form className="form-container" onSubmit={handleSubmit}>
+                {message && (
+                    <p
+                        style={{
+                            color: message.type === "error" ? "red" : "green",
+                        }}
+                    >
+                        {message.detail}
+                    </p>
+                )}
                 <p>
                     <label>
                         Email:
@@ -46,6 +63,7 @@ export const Login = () => {
                             id="email"
                             name="email"
                             value={email}
+                            required
                             onChange={handleEmailChange}
                         />
                     </label>
