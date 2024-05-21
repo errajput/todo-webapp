@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     deleteData,
     getData,
+    isLogin,
     postData,
     updateData,
 } from "../services/http.service";
 
 export const Todos = () => {
+    const navigate = useNavigate();
     const [todos, setTodos] = useState([]);
     const [currentTodo, setCurrentTodo] = useState("");
 
@@ -15,6 +18,7 @@ export const Todos = () => {
     };
 
     const addTodo = async (e) => {
+        e.preventDefault();
         if (!currentTodo) return;
         await postData("todos", { title: currentTodo });
         await getTodos();
@@ -42,18 +46,26 @@ export const Todos = () => {
 
     useEffect(() => {
         // TODO: Add Navigate to Login if not login
-        getTodos();
+
+        if (isLogin()) {
+            getTodos();
+        } else {
+            navigate("/login");
+        }
     }, []);
 
     return (
         <>
             <div className="add-todo-container">
-                <input
-                    type="text"
-                    value={currentTodo}
-                    onChange={handleInputChange}
-                />
-                <button onClick={addTodo}>Add</button>
+                <form onSubmit={addTodo}>
+                    <input
+                        type="text"
+                        value={currentTodo}
+                        required
+                        onChange={handleInputChange}
+                    />
+                    <button type="submit">Add</button>
+                </form>
             </div>
             <ul className="todos-container">
                 {todos.map((todo, i) => (

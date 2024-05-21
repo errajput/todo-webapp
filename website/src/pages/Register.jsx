@@ -48,6 +48,7 @@ export const Register = () => {
                             name="name"
                             maxLength="20"
                             minLength="5"
+                            required
                             onChange={(e) => handleInputChange(e, "name")}
                         />
                     </label>
@@ -59,6 +60,7 @@ export const Register = () => {
                             type="email"
                             id="email"
                             name="email"
+                            required
                             onChange={(e) => handleInputChange(e, "email")}
                         />
                     </label>
@@ -70,6 +72,7 @@ export const Register = () => {
                             type="password"
                             id="password"
                             name="password"
+                            required
                             onChange={(e) => handleInputChange(e, "password")}
                         />
                     </label>

@@ -76,6 +76,7 @@ export const Login = () => {
                             id="password"
                             name="password"
                             value={password}
+                            required
                             onChange={handlePasswordChange}
                         />
                     </label>
