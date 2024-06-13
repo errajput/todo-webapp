@@ -13,6 +13,9 @@ body {
 h1 {
     text-align: center;
 }
+button {
+    cursor: pointer;
+}
 
 nav ul {
     list-style-type: none;
