@@ -10,6 +10,7 @@ export const Login = () => {
     // {type: error | info, detail: string}
     const [message, setMessage] = useState(null);
 
+    /**using event handler for email, password and submit */
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
     };
