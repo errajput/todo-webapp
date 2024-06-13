@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isLogin, postData } from "../services/http.service";
 
+/**
+ * creating a register function and set id and value using with useState method
+ */
 export const Register = () => {
     const navigate = useNavigate();
     const [registerData, setRegisterData] = useState({
@@ -9,7 +12,9 @@ export const Register = () => {
         email: "",
         password: "",
     });
-
+    /**use event handler to handle name field,
+     * email field and password field
+     */
     const handleInputChange = (e, fieldName) => {
         setRegisterData({
             ...registerData,
