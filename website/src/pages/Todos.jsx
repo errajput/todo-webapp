@@ -8,6 +8,7 @@ import {
     updateData,
 } from "../services/http.service";
 
+/**handle current todo and todos */
 export const Todos = () => {
     const navigate = useNavigate();
     const [todos, setTodos] = useState([]);

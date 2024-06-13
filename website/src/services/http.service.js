@@ -64,11 +64,11 @@ export const deleteData = async (path) => {
     const response = await fetch(`${API_URL}${path}`, options);
     return await response.json();
 };
-
+// user login with specified keyname
 export const isLogin = () => {
     return !!localStorage.getItem("userToken");
 };
-
+// when user logout then all data is clear which is locally store
 export const logoutUser = () => {
     localStorage.clear();
 };
