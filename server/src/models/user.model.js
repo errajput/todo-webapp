@@ -1,12 +1,13 @@
 import { Schema, model } from "mongoose";
 import validator from "validator";
 
+/**crete user schema with validator also with timestamps
+ */
 const UserSchema = new Schema(
     {
         name: {
             type: String,
             required: true,
-            minlength: 3,
         },
         email: {
             type: String,
@@ -19,12 +20,6 @@ const UserSchema = new Schema(
                 }
             },
         },
-        // phone: {
-        //     type: String,
-        //     maxLength: 10,
-        //     required: true,
-        //     unique: true,
-        // },
         password: {
             type: String,
             required: true,
@@ -34,7 +29,7 @@ const UserSchema = new Schema(
         timestamps: true,
     }
 );
-
+// crete new obj which store data of user
 const UserModel = new model("User", UserSchema);
 
 export default UserModel;
