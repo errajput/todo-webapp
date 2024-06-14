@@ -10,6 +10,7 @@ import AuthRoutes from "./routes/auth.routes.js";
 import UserRoutes from "./routes/user.routes.js";
 
 // NOTE: IIFE - Immediately Invoked Function Expressions
+// connection with mongodb
 (async () => {
     await connect(process.env.MONGODB_URI, { dbName: "todo-webapp" });
     console.log("[MongoDB] DB Connected");
