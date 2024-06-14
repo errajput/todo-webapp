@@ -1,5 +1,5 @@
 import { Schema, Types, model } from "mongoose";
-
+/**create todo schema with validation with timestamps value  */
 const TodoSchema = new Schema(
     {
         title: {
@@ -8,11 +8,6 @@ const TodoSchema = new Schema(
             minlength: 3,
             maxLength: 32,
         },
-        // description: {
-        //     type: String,
-        //     required: false,
-        //     maxLength: 256,
-        //   },
         isDone: {
             type: Boolean,
             default: false,
@@ -27,5 +22,5 @@ const TodoSchema = new Schema(
         timestamps: true,
     }
 );
-
+//  export todo model
 export const TodoModel = model("todo", TodoSchema);
